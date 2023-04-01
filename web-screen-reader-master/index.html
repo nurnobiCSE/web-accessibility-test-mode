@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<title>Web Screen Reader</title>
+        <meta charset="UTF-8">
+		<meta name="fragment" content="!">
+		<meta name="description" content="A free Web Screen Reader that improves a site's accessibility for the blind or the visually impaired.'">
+		<meta name="keywords" content="Screen Reader, Accessibility, Blind, Visually Impaired, Free, Web">
+		<meta name="viewport" content="width=device-width">
+		<link rel="icon" type="image/png" sizes="24x24" href="./browser/favicon.ico">
+		<link rel="stylesheet" href="./browser/bootstrap.min.css">
+        <style>
+            body {
+                text-align: center;
+            }
+            .jumbotron {
+                margin-bottom: 0;
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+            #free {
+                position: absolute;
+                top: 15px;
+                left: -25px;
+                padding: 2px 25px;
+                background: pink;
+                transform: rotate(-45deg);
+                display: block;
+                line-height: initial;
+                font-size: 16px;
+                text-shadow: 2px 2px 3px rgba(0,0,0,0.3);
+                box-shadow: 0 1px 5px 1px rgba(0,0,0,0.3);
+            }
+            .form-control {
+                max-width: 300px;
+                margin: auto;
+            }
+            .form-control[type=checkbox] {
+                display: inline-block;
+                width: auto;
+            }
+            .form-control[type=checkbox]:not(:focus) {
+                box-shadow: none;
+            }
+            #reveal-checked:not(:checked) ~ * {
+                display: none;
+            }
+
+            /* start for switch */
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 34px;
+              }
+              .switch input { 
+                opacity: 0;
+                width: 0;
+                height: 0;
+              }
+              
+              
+              .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                -webkit-transition: .4s;
+                transition: .4s;
+              }
+              
+              .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+              }
+              
+              input:checked + .slider {
+                background-color: #2196F3;
+              }
+              
+              input:focus + .slider {
+                box-shadow: 0 0 1px #2196F3;
+              }
+              
+              input:checked + .slider:before {
+                -webkit-transform: translateX(26px);
+                -ms-transform: translateX(26px);
+                transform: translateX(26px);
+              }
+              
+              /* Rounded sliders */
+              .slider.round {
+                border-radius: 34px;
+              }
+              
+              .slider.round:before {
+                border-radius: 50%;
+              }
+               /* end for switch */
+        </style>
+    </head>
+    <body>
+        <main class="jumbotron">
+            <h2 style="color:teal;">press CTRL just one time for Switch On</h2>
+            <!-- Switch start -->
+            <label class="switch" for="is_checked">
+                <input onclick="mycheck" type="checkbox" id="is_checked">
+                <span class="slider round"></span>
+            </label>
+         
+            
+            <!-- Switch end -->
+
+			<h1>~Web Screen Reader~</h1>
+            <h3>A free screen reader for the web to improve accessibility.<br>Now even the blind and the visually impaired can access everything.</h3>
+            <sup id="free">enjoy it</sup>
+            
+            <br>
+            <hr>
+            <br>
+            
+            <div>
+                <h2>1. Simply <u>hover</u> me to read me out loud</h2>
+                <h2><a href="/not-a-real-url-haha" target="_blank">2. I will let you know what type I am</a></h2>
+                
+                <img src="./browser/heart.png" title="A heart - You will get a description of what the image is">
+                
+                <h2><input class="form-control" placeholder="Another way to read content is to use Tab" autofocus></h2>
+                <h2><input class="form-control" type="email" value="You'll know the current value"></h2>
+
+                <h3>
+                    <select class="form-control">
+                        <option value="">Handles selects</option>
+                        <option value="1">The first option</option>
+                        <option value="2">The second option which is much better</option>  	
+                    </select>
+                </h3>
+
+                <h3 class="form-inline">
+                    <input type="checkbox" name="Checkboxes are sometimes checked and sometimes not" class="form-control" id="reveal-checked">
+                    <div><label for="reveal-checked">Things that are hidden will not be read</label></div>
+                </h3>
+            </div>
+
+            <br>
+            <hr>
+            <br>
+
+            <div>
+                <h3>
+                    <button id="raise" class="btn btn-info">It will notify you when changes occur</button>
+                    <h4 id="numb">New value is: 0</h4>
+                    <script>
+                        let raise = document.getElementById("raise");
+                        let numb;
+                        raise.onclick = () => {
+                            numb = numb || document.getElementById("numb");
+                            let oldText = numb.innerText;
+                            numb.innerText = oldText.slice(0, oldText.length - 1) + (+oldText.slice(oldText.length - 1) + 1);
+                        };
+                    </script>
+                </h3>
+
+                <h3>
+                    <input id="toggle" type="button" value="You will know when new content appears" class="btn btn-success">
+                    <script id="self-script">
+                        let toggle = document.getElementById("toggle");
+                        let selfScript;
+                        toggle.onclick = () => {
+                            let newElement = document.createElement("h5");
+                            newElement.innerText = "New content inserted!";
+                            selfScript = selfScript || document.getElementById("self-script");
+                            toggle.parentElement.insertBefore(newElement, selfScript);
+                            setTimeout(() => newElement.remove(), 5000); // cleanup
+                        };
+                    </script>
+                </h3>
+            </div>
+
+            <br>
+            <hr>
+            <br>
+
+            <div>
+                <h2 tabindex="0">So how do I start?</h2>
+                <h3>1. Star me on <a href="https://github.com/Tzook/web-screen-reader" aria-label="Tzook's GitHub link with the Web Screen Reader code">GitHub</a> - to get me motivation to continue working on it</h3>
+                <h3>2. Tell me your ideas to improve this. Email: <a href="mailto:tzook10@gmail.com">tzook10@gmail.com</a>
+                <h3>3. Be patient! It's still under construction and will soon be ready for use</h3>
+            </div>
+
+        </main>
+        <script id="one"></script>
+        <script>
+            const one =  document.getElementById('one');
+            const switchBox = document.getElementById('is_checked');
+            
+            
+            
+            var ctrlPressed = false; // flag to track if Ctrl key is currently pressed
+            var doubleCtrlPress = false; // flag to track if Ctrl key was double pressed
+            var pressCount = 0; // variable to store the number of presses
+            var pressTimeout; // variable to store the ID of the timeout
+            var pressInterval = 300; // time interval in milliseconds to count presses
+
+            document.addEventListener('keydown', function(event) {
+            if (event.key === 'Control') {
+            if (ctrlPressed && !doubleCtrlPress) {
+                pressCount++; // increment the press count if Ctrl is pressed again within the time interval
+            } else {
+                ctrlPressed = true; // set the flag to true when Ctrl key is pressed for the first time
+                doubleCtrlPress = false; // reset the double press flag
+                pressCount = 1; // set the press count to 1
+            }
+
+            // start a timeout to reset the press count after the time interval
+            clearTimeout(pressTimeout);
+            pressTimeout = setTimeout(function() {
+                pressCount = 0;
+            }, pressInterval);
+
+            // check if the press count is 2 to indicate a double press
+            if (pressCount === 1) {
+                 
+                switchBox.checked = !switchBox.checked; // toggle the checked state of the checkbox
+                if(switchBox.checked){
+                    one.innerHTML = System.load("Main");
+                    document.body.appendChild(one.cloneNode());
+                    console.log("On");
+                     
+                } else if(!switchBox.checked){
+                    one.innerHTML = '' ;
+                    document.body.removeChild(one);
+                    location.reload();
+                    console.log("OFF");
+                    
+                }
+                doubleCtrlPress = true; // set the double press flag to true
+                pressCount = 0; // reset the press count
+            }
+            }
+            });
+
+            document.addEventListener('keyup', function(event) {
+            if (event.key === 'Control') {
+            ctrlPressed = false; // set the flag to false when Ctrl key is released
+            clearTimeout(pressTimeout); // clear the timeout when the key is released
+            pressCount = 0; // reset the press count
+            }
+            });
+
+            
+          
+            
+
+
+
+            switchBox.addEventListener("change", () => {
+                if(switchBox.checked){
+                    one.innerHTML = System.load("Main");
+                    document.body.appendChild(one.cloneNode());
+                    console.log("On");
+                     
+                } else if(!switchBox.checked){
+                    one.innerHTML = '' ;
+                    document.body.removeChild(one);
+                    location.reload();
+                    console.log("OFF");
+                    
+                }
+            });
+        </script>
+        <script src = "./browser/system.js"></script>
+        <script id="two" src = "./bundle.js"></script>
+        
+       
+       
+    </body>
+</html>
